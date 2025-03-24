@@ -1,3 +1,5 @@
+package RandomStuff;
+
 import java.util.Scanner;
 
 public class YourMom {

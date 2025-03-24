@@ -1,4 +1,5 @@
-import java.util.LinkedList;
+package RandomStuff;
+
 import java.util.Scanner;
 
 public class SamProject1ToDoList {
