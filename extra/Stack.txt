@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Stack {
+    private:
+        int top;
+        int stack[5];
+
+    public:
+        Stack() {
+            top = -1;
+            for (int i = 0; i < 5; ++i) {
+                stack[i] = 0;
+            }
+        }
+
+        bool isEmpty() {
+            return top == -1;
+        }
+
+        bool isFull() {
+            return top == 4;
+        }
+
+        void push(int value) {
+            if (isFull()) {
+                cout << "Overflow error, stack is full" << endl;
+            } else {
+                stack[++top] = value;
+                cout << "Pushed " << value << " to the top of stack" << endl;
+            }
+        }
+
+        void pop() {
+            if (isEmpty()) {
+                cout << "Underflow error, stack is empty" << endl;
+            } else {
+                stack[top--] = 0;
+                cout << "Popped top of stack" << endl;
+            }
+        }
+
+        int eleCount() {
+            return top;
+        }
+
+        int eleAccess(int position) {
+            if (isEmpty()) {
+                cout << "Underflow error, stack is empty" << endl;
+                return -2147483648;
+            } else if (position < 0 || position > top) {
+                cout << (position < 0 ? "Under" : "Over") << "flow error, out of bounds" << endl;
+                return -2147483648;
+            } else {
+                return stack[position];
+            }
+        }
+
+        void eleUpdate(int position, int value) {
+            if (isEmpty()) {
+                cout << "Underflow error, stack is empty" << endl;
+            } else if (position < 0 || position > top) {
+                cout << (position < 0 ? "Under" : "Over") << "flow error, out of bounds" << endl;
+            } else {
+                stack[position] = value;
+                cout << "Updated position " << position << " to " << value << endl;
+            }
+        }
+
+        void display() {
+            cout << "{";
+            for (int i = 0; i < 5; ++i) {
+                cout << stack[i] << ", ";
+            }
+            cout << stack[4] << "}" << endl;
+        }
+};
+
+int main() {
+    Stack stack;
+    stack.display();
+    stack.push(2);
+    stack.display();
+    stack.push(3);
+    stack.display();
+    stack.eleUpdate(0, 5);
+    stack.display();
+    stack.pop();
+    stack.display();
+    stack.push(8);
+    stack.display();
+    stack.eleUpdate(0, 40);
+    stack.display();
+    stack.pop();
+    stack.display();
+    stack.push(2);
+    stack.display();
+    stack.eleUpdate(0, 20);
+    stack.display();
+    stack.pop();
+    stack.display();
+    stack.push(3);
+    stack.display();
+    stack.eleUpdate(0, 60);
+    stack.display();
+    stack.pop();
+    stack.display();
+}

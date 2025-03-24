@@ -1,0 +1,117 @@
+#include <iostream>
+using namespace std;
+
+struct NodeBST {
+    int value;
+    NodeBST* next;
+
+    // Constructor for the node
+    NodeBST(int x) {
+        value = x;
+        next = nullptr;
+    }
+};
+
+class SinglyLinkedList {
+    private:
+        NodeBST* head;
+        bool debug;
+
+    public:
+        // Constructor for the linked list
+        SinglyLinkedList() {
+            head = NULL;
+            debug = false;
+        }
+
+        SinglyLinkedList(bool debug) {
+            head = NULL;
+            this->debug = debug;
+        }
+
+        // Inserts an element at the end of the list
+        void insert(int value) {
+            // Using dynamic memory to create a node
+            NodeBST* node = new NodeBST(value);
+
+            if (head == NULL) {
+                // When there is no node stored in head, assigns the new node to head
+                head = node;
+            } else {
+                // Finds the last node and makes that node's pointer point to the new node
+                NodeBST* temp = head;
+                while (temp->next != NULL) {
+                    temp = temp->next;
+                }
+                temp->next = node;
+            }
+
+            if (debug) {
+                cout << "Inserted " << value << " at end of linked list" << endl;
+            }
+        }
+
+        // Inserts an element at the front of the list
+        void insert_front(int value) {
+            NodeBST* node = new NodeBST(value);
+
+            // Makes new node point to current head
+            node->next = head;
+            // Sets current head to new node
+            head = node;
+
+            if (debug) {
+                cout << "Inserted " << value << " at front of linked list" << endl;
+            }
+        }
+
+        // Deletes the first node with matching value
+        void delete_node(int value) {
+            NodeBST* temp = head;
+            NodeBST* prev = NULL;
+            int position = 0;
+
+            // Looks for the first node with the given value
+            while (temp->value != value && temp->next != NULL) {
+                prev = temp;
+                temp = temp->next;
+                ++position;
+            }
+
+            if (temp->value == value) {
+                prev->next = temp->next;
+                delete temp;
+
+                if (debug) {
+                    cout << "Deleted " << value << " from position " << position << " of linked list" << endl;
+                }
+            } else if (debug) {
+                cout << value << " was not found in linked list" << endl;
+            }
+        }
+
+        // Print all elements in the list
+        void printList() {
+            NodeBST* temp = head;
+            while (temp != NULL) {
+                cout << temp->value << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+};
+
+int main() {
+    SinglyLinkedList list(true);
+    list.insert(4);
+    list.insert(7);
+    list.insert(2);
+    list.printList();
+    list.insert_front(3);
+    list.printList();
+    list.delete_node(7);
+    list.printList();
+    list.delete_node(10);
+
+    return 0;
+}

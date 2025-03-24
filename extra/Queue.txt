@@ -1,0 +1,112 @@
+#include <iostream>
+using namespace std;
+
+class Queue {
+    private:
+        int front, back;
+        int queue[5];
+
+    public:
+        Queue() {
+            front = -1;
+            back = -1;
+            for (int i = 0; i < 5; ++i) {
+                queue[i] = 0;
+            }
+        }
+
+        bool isEmpty() {
+            for (int i = 0; i < 5; ++i) {
+                if (queue[i] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        bool isFull() {
+            for (int i = 0; i < 5; ++i) {
+                if (queue[i] == 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        void enqueue(int value) {
+            if (isFull()) {
+                cout << "Overflow error, the queue is full" << endl;
+            } else if (isEmpty()) {
+                ++front;
+            }
+            queue[++back] = value;
+            cout << "Added queue " << value << endl;
+        }
+
+        int dequeue() {
+            if (isEmpty()) {
+                cout << "Underflow error, the queue is empty" << endl;
+                return 0;
+            } else if (front == back) {
+                int value = queue[front];
+                queue[front] = 0;
+                front = -1; // Altering to go back to the start to make it circular,
+                back = -1;  // since there would be no more items in the queue
+                return value;
+            } else {
+                int value = queue[front];
+                queue[front++] = 0;
+                return value;
+            }
+        }
+
+        int eleCount() {
+            return back - front + 1;
+        }
+
+        void display() {
+            cout << "{";
+            for (int i = 0; i < 4; ++i) {
+                cout << queue[i] << ", ";
+            }
+            cout << queue[4] << "}" << endl;
+        }
+};
+
+int main() {
+    Queue queue;
+    cout << "Empty? " << queue.isEmpty() << endl;
+    queue.display();
+    queue.enqueue(3);
+    queue.display();
+    queue.enqueue(7);
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Empty? " << queue.isEmpty() << endl;
+    queue.enqueue(4);
+    queue.display();
+    cout << "# of queues: " << queue.eleCount() << endl;
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.enqueue(5);
+    cout << "Full? " << queue.isFull() << endl;
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+    cout << "Full? " << queue.isFull() << endl;
+    cout << "Dequeued " << queue.dequeue() << endl;
+    queue.display();
+}

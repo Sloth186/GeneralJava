@@ -1,0 +1,382 @@
+#include <iostream>
+using namespace std;
+
+void insertionSortIterative(int arr[], int n) {
+    /*int temp;
+    for (int i = 0; i < n; ++i) {
+        temp = arr[i];
+        for (int j = 0; j < i; ++j) {
+            if (temp < arr[j]) {
+                for (int k = i; k > j; --k) {
+                    arr[k] = arr[k-1];
+                    arr[k-1] = temp;
+                }
+                j = i;
+            }
+        }
+    }*/
+
+    int temp;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j > 0 && arr[j] < arr[j-1]; --j) {
+            temp = arr[j];
+            arr[j] = arr[j-1];
+            arr[j-1] = temp;
+        }
+    }
+}
+
+void insertionSortRecursive(int arr[], int length, int n = 0) {
+    if (n < length) {
+        int temp;
+        for (int i = n; i > 0 && arr[i] < arr[i-1]; --i) {
+            temp = arr[i];
+            arr[i] = arr[i-1];
+            arr[i-1] = temp;
+        }
+        insertionSortRecursive(arr, length, n + 1);
+    }
+}
+
+struct NodeBST {
+    int val;
+    NodeBST* next;
+
+    NodeBST(int x) {
+        val = x;
+        next = nullptr;
+    }
+};
+
+class SinglyLinkedList {
+private:
+    NodeBST* head;
+
+public:
+    SinglyLinkedList() {
+        head = NULL;
+    }
+
+    void insert(int val) {
+        NodeBST* node = new NodeBST(val);
+
+        if (head == NULL) {
+            head = node;
+        } else {
+            NodeBST* temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = node;
+        }
+    }
+
+    void printList() {
+        NodeBST* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    NodeBST* seekPrevNode(NodeBST* next) {
+        NodeBST* temp = head;
+        if (temp == next) {
+            return NULL;
+        }
+        while (temp->next != next) {
+            temp = temp->next;
+        }
+        return temp;
+    }
+
+    // Implement your code here
+    void insertionSortLinkedList() {
+        NodeBST *temp1 = head, *temp2, *temp3;
+        int temp;
+        while (temp1 != NULL) {
+            temp = temp1->val;
+            temp2 = seekPrevNode(temp1);
+            while (temp2 != NULL && temp2->val > temp) {
+                temp3 = temp2->next;
+                temp3->val = temp2->val;
+                temp2 = seekPrevNode(temp2);
+            }
+            if (temp2 == NULL) {
+                temp3 = head;
+            } else {
+                temp3 = temp2->next;
+            }
+            temp3->val = temp;
+            temp1 = temp1->next;
+        }
+    }
+    // This was the most excruciating piece of code I've had to figure out thus far in my entire life
+    // Please tell me the best way to code something like this because I am sure my current code is shitty as hell despite getting the job done
+};
+
+
+int main() {
+    int arr[] = {5, 10, 4, 3, 1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    insertionSortIterative(arr, n);
+
+    for (int i = 0; i < n; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    int arr_2[] = {5, 10, 4, 3, 1};
+    int n_2 = sizeof(arr_2) / sizeof(arr_2[0]);
+
+    insertionSortRecursive(arr_2, n_2);
+
+    for (int i = 0; i < n_2; i++){
+        cout << arr_2[i] << " ";
+    }
+    cout << endl;
+
+    SinglyLinkedList list;
+
+    // Inserting elements into the list
+    list.insert(5);
+    list.insert(10);
+    list.insert(4);
+    list.insert(3);
+    list.insert(1);
+
+    list.insertionSortLinkedList();
+
+    list.printList();
+
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+void swap(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void iterative_bubble_sort(int arr[], int n) {
+    int i, j;
+    for (i = n; i > 0; --i) {
+        for (j = 0; j < i - 1; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+void recursive_bubble_sort(int arr[], int n) {
+    if (n > 0) {
+        n = n - 1;
+        for (int i = 0; i < n; ++i) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr[i], arr[i + 1]);
+            }
+        }
+        recursive_bubble_sort(arr, n);
+    }
+}
+
+struct NodeBST {
+    int val;
+    NodeBST* next;
+
+    NodeBST(int x) {
+        val = x;
+        next = nullptr;
+    }
+};
+
+class SinglyLinkedList {
+private:
+    NodeBST* head;
+
+public:
+    SinglyLinkedList() {
+        head = NULL;
+    }
+
+    void insert(int val) {
+        NodeBST* node = new NodeBST(val);
+
+        if (head == NULL) {
+            head = node;
+        } else {
+            NodeBST* temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = node;
+        }
+    }
+
+    void printList() {
+        NodeBST* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    // write your code here:
+    // NOTE: You can use the listlength method below, feel free to eliminate it if you do not use it.
+    void bubbleSortLinkedList(SinglyLinkedList& list, int listln) {
+        if (listln > 0) {
+            listln  = listln - 1;
+            NodeBST *temp = head, *tempPrev = NULL, *tempNext;
+            for (int i = 0; i < listln; ++i) {
+                tempNext = temp->next;
+                if (temp->val > tempNext->val) {
+                    temp->next = tempNext->next;
+                    tempNext->next = temp;
+                    if (tempPrev == NULL) {
+                        head = tempNext;
+                    } else {
+                        tempPrev->next = tempNext;
+                    }
+                    tempPrev = tempNext;
+                } else {
+                    tempPrev = temp;
+                    temp = temp->next;
+                }
+            }
+            bubbleSortLinkedList(list, listln);
+        }
+    }
+
+    int listLength() {
+        int length = 0;
+        NodeBST* temp = head;
+        while (temp != NULL) {
+            length++;
+            temp = temp->next;
+        }
+        return length;
+    }
+
+};
+
+int main() {
+    int arr[] = {5, 10, 4, 3, 1};
+    //int arr[] = {15, 10, 24, 3, 1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    iterative_bubble_sort(arr, n);
+
+    for (int i = 0; i < n; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    int arr_2[] = {5, 10, 4, 3, 1};
+    int n_2 = sizeof(arr_2) / sizeof(arr_2[0]);
+
+    recursive_bubble_sort(arr_2, n_2);
+
+    for (int i = 0; i < n_2; i++){
+        cout << arr_2[i] << " ";
+    }
+    cout << endl;
+
+    SinglyLinkedList list;
+
+    // Inserting elements into the list
+    list.insert(5);
+    list.insert(10);
+    list.insert(4);
+    list.insert(3);
+    list.insert(1);
+
+    int lstln = list.listLength();
+
+    list.bubbleSortLinkedList(list, lstln);
+    list.printList();
+
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+void merge(int arr[], int size, int start, int subarrsize = -1) {
+    // Index trackers for main and sub arrays
+    int i = 0, j = 0, k = start;
+    // Sizes of sub arrays for the main array
+    int subarrsize1, subarrsize2;
+    if (subarrsize == -1) {
+        subarrsize1 = size / 2;
+        subarrsize2 = (size + 1) / 2;
+    } else {
+        subarrsize1 = subarrsize;
+        subarrsize2 = size - subarrsize;
+    }
+    // Splits the passed array into two sub arrays for merging and sorting
+    int subarr1[subarrsize1], subarr2[subarrsize2];
+    for (; i < subarrsize1; ++i)
+        subarr1[i] = arr[k++];
+    for (; j < subarrsize2; ++j)
+        subarr2[j] = arr[k++];
+
+    i = 0; j = 0; k = start;
+    // Merges sub arrays to main array in sorted order
+    for (; k < start + size; ++k) {
+        if (subarr1[i] < subarr2[j])
+            arr[k] = subarr1[i++];
+        else
+            arr[k] = subarr2[j++];
+        if (i >= subarrsize1 || j >= subarrsize2)
+            break;
+    }
+
+    // Copies remainder of sub arrays to end of main array
+    for (; i < subarrsize1; ++i)
+        arr[++k] = subarr1[i];
+    for (; j < subarrsize2; ++j)
+        arr[++k] = subarr2[j];
+}
+
+void iterative_merge_sort(int arr[], int size) {
+    int i, j;
+    // Loops for each level of merging necessary
+    for (i = 2; i <= size; i *= 2) {
+        // Performs array splitting and remerging/sorting according to the level of merging currently on
+        j = 0;
+        for (; j < size; j += i) {
+            if (size - j < i) {
+                // Takes care of the last sub array when it has a length not a power of 2
+                j -= i;
+                merge(arr, size - j, j, i);
+                j += i;
+            } else
+                merge(arr, i, j);
+        }
+    }
+}
+
+int main() {
+    int arr[] = {5, 10, 4, 3, 1, 6, 9, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+
+    iterative_merge_sort(arr, n);
+
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+
+    return 0;
+}
+
+// This was painful.
